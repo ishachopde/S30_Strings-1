@@ -1,0 +1,46 @@
+class Solution {
+    
+    //Clarifyign. questions: does String s have duplicates?
+    
+    public String customSortString(String order, String s) {
+        
+        HashMap<Character, Integer> hmap = new HashMap<>();
+        
+        // Stringbuilder for output string
+        StringBuilder result = new StringBuilder();
+        
+        // we need to store the elements and frequency of String s in a hashmap
+        for(int i = 0; i < s.length();i++){
+            if(hmap.containsKey(s.charAt(i))){
+                hmap.put(s.charAt(i), hmap.get(s.charAt(i)) + 1);
+            }else{
+                hmap.put(s.charAt(i), 1);
+            }
+        }
+        
+        //check if the charcters of String order are present in the hashmap and if yes, kepe appending them until hashmap frequency of that char becomes zero.
+        // then rempve the char with 0 freq
+        for(int i = 0; i < order.length(); i++){
+            if(hmap.containsKey(order.charAt(i))){
+                int freq = hmap.get(order.charAt(i));
+                for(int j = 0; j < freq; j++){
+                    result.append(order.charAt(i));
+                }
+                hmap.remove(order.charAt(i));
+            }
+        }
+        
+        // append remaining keys from hmap to result string
+        for(Character ch : hmap.keySet()){
+            int freq = hmap.get(ch);
+            for(int i = 0 ; i < freq; i++){
+                result.append(ch);
+            }
+        }
+        
+        return result.toString();
+    }
+}
+
+//TC: O(n)
+//SC: O(n)
